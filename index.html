@@ -76,6 +76,32 @@
     BABYLON.SceneLoader.ImportMesh("", "https://raw.githubusercontent.com/joshuabinswanger/AiW_Macro01_Test/main/models/", "Macro_LowPoly_01.glb", scene, function(newMeshes){
         newMeshes[0].scaling = new BABYLON.Vector3(3, 3, 3);
     });
+
+    //Clipping PLane
+    scene.clipPlane = new BABYLON.Plane(0, 1, 0, -3);
+
+    // GUI
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+    var panel = new BABYLON.GUI.StackPanel();
+    panel.width = "220px";
+    panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    advancedTexture.addControl(panel);
+
+    var slider = new BABYLON.GUI.Slider();
+    slider.minimum = -3;
+    slider.maximum = 3;
+    slider.value = -3;
+    slider.height = "20px";
+    slider.width = "200px";
+    slider.color = "green";
+    slider.onValueChangedObservable.add(function(value) {
+        scene.clipPlane = new BABYLON.Plane(0, 1, 0, value);
+    });
+    panel.addControl(slider);   
+
+   
     return scene;
 };
                 window.initFunction = async function() {
